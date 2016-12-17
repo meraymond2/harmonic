@@ -1,7 +1,8 @@
 package controllers
 
 import com.google.inject.Singleton
-import models._
+import models.Tone._
+import models.Interval._
 import play.api.mvc.{Action, Controller}
 
 /**
@@ -12,7 +13,7 @@ import play.api.mvc.{Action, Controller}
 class HomeController extends Controller {
 
   def index = Action {
-
+    println(interval(Gs1, A1))
     Ok
   }
 

@@ -8,6 +8,16 @@ case class Interval private (fullName: String, shortName: String, halfSteps: Int
 
 object Interval {
 
+  def interval(lower: Tone, upper: Tone): Interval = {
+    intervals.filter( int =>
+      (int.letterGap == upper.letter.index - lower.letter.index.id)
+        &&
+      (int.halfSteps == upper.pitch - lower.pitch)
+    ).head
+  }
+
+  // Need to be careful with the unusual ones, augmented seven above A0 is a G##, which I don't have in the list.
+
   val unison:     Interval = Interval("Perfect Unison",     "P1", 0,  0)
   val augUnison:  Interval = Interval("Augmented Unison",   "A1", 1,  0)
   val dimSecond:  Interval = Interval("Diminished Second",  "d2", 0,  1)
@@ -34,5 +44,7 @@ object Interval {
   val augSeventh: Interval = Interval("Augmented Seventh",  "A7", 12, 6)
   val dimOctave:  Interval = Interval("Diminished Octave",  "d8", 11, 7)
   val octave:     Interval = Interval("Perfect Octave",     "P8", 12, 7)
+
+  val intervals: Seq[Interval] = Seq[Interval](unison, augUnison, dimSecond, minSecond, majSecond, augSecond, dimThird, minThird, majThird, augThird, dimFourth, perFourth, augFourth, dimFifth, perFifth, augFifth, dimSixth, minSixth, majSixth, augSixth, dimSeventh, minSeventh, majSeventh, augSeventh, dimOctave, octave)
 
 }
