@@ -13,8 +13,6 @@ class HomeController extends Controller {
 
   def index = Action {
 
-//    def blahblah(): blah = blah
-
     Ok
   }
 
