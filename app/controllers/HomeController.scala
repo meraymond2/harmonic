@@ -13,7 +13,7 @@ import play.api.mvc.{Action, Controller}
 class HomeController extends Controller {
 
   def index = Action {
-    println(interval(Gs1, A1))
+    println(findInterval(Gs1, A1))
     Ok
   }
 

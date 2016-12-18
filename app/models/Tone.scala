@@ -7,20 +7,20 @@ import models.PitchClasses._
 
 case class Tone(letter: Letter, pitchClass: PitchClass, spn: String, pitch: Int) {
 
-  def +(interval: Interval): Tone = {
-    Tone.tones.filter( tone =>
-      (tone.letter.index.id == this.letter.index + interval.letterGap)
+  def up(interval: Interval): Option[Tone] = {
+    Tone.tones.find( tone =>
+      (tone.letter.index == this.letter.index + interval.letterGap)
         &&
       (tone.pitch == this.pitch + interval.halfSteps)
-    ).head
+    )
   }
 
-  def -(interval: Interval): Tone = {
-    Tone.tones.filter( tone =>
-      (tone.letter.index.id == this.letter.index - interval.letterGap)
+  def down(interval: Interval): Option[Tone] = {
+    Tone.tones.find( tone =>
+      (tone.letter.index == this.letter.index - interval.letterGap)
         &&
       (tone.pitch == this.pitch - interval.halfSteps)
-    ).head
+    )
   }
 
 }
