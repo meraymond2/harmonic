@@ -1,7 +1,9 @@
 package models.notes
 
+import models.intervals.{Interval, IntervalsDao, unknownInterval}
 import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.PitchLetter
+import models.notes.PitchLetters.wrap
 
 /**
   * Created by michael on 19/12/16.
@@ -20,6 +22,23 @@ trait Note {
   val absPitch: Int
   lazy val pitchClass: PitchClass = PitchClasses.withName(spn.init)
   lazy val pitchLetter: PitchLetter = PitchLetters.withName(spn.head.toString)
+
+  /***
+    * Returns the difference between two notes in place, so it doesn't consider direction. It just compares
+    * the difference between the lower and higher.
+    * @param otherNote The second note to compare; it doesn't matter if it's higher or lower.
+    * @return A static interval. It's a bit strange to return a placeholder unknown interval instead of an
+    *         option, but it works for the chord-matching, and if it needs to be returned to a user, it's
+    *         as good to display an unknown interval as it is to display no interval.
+    */
+  def diff(otherNote: Note): Interval = {
+    val Seq(lower, upper) = Seq(this, otherNote).sortBy(_.absPitch)
+    IntervalsDao.intervals.find( interval =>
+      (interval.letterDiff == wrap(upper.pitchLetter.id - lower.pitchLetter.id))
+        &&
+      (interval.pitchDiff == upper.absPitch - lower.absPitch)
+    ).getOrElse(unknownInterval)
+  }
 
   override def toString: String = this.spn
 }
