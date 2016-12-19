@@ -5,12 +5,14 @@ package models.intervals
   */
 
 /***
-  * pitchDiff: The number of half-steps in the interval.
-  * letterDiff: The difference between the letters' indices. Note that this
+  * val pitchDiff: The number of half-steps in the interval.
+  * val letterDiff: The difference between the letters' indices. Note that this
   * number is one less than the common name. So C-A = 3 - 1 = 2 = a third.
-  * simpleInt: The corresponding simple interval for a compound interval. For
+  * val simpleInt: The corresponding simple interval for a compound interval. For
   * example, a minor tenth corresponds to a minor third (when figuring chords).
   *
+  * They need to be objects so that they can reference themselves. That doesn't work
+  * with instances of case classes.
   * The instances are not an exhaustive list, for now they're just the common ones.
   */
 

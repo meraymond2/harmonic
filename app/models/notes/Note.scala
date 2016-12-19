@@ -18,7 +18,7 @@ import models.notes.PitchLetters.wrap
   * val pitchLetter: The note's letter. These are used for working out intervals.
   */
 
-case class Note(spn: String, absPitch: Int) {
+case class Note (spn: String, absPitch: Int) {
 
   lazy val pitchClass: PitchClass = PitchClasses.withName(spn.init)
   lazy val pitchLetter: PitchLetter = PitchLetters.withName(spn.head.toString)
