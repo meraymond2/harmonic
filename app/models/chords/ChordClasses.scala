@@ -5,7 +5,9 @@ package models.chords
   */
 
 object ChordClasses extends Enumeration {
-  type ChordClass
+  type ChordClass = ChordClasses.Value
+
+  val minorTriad, majorTriad, minSixChord, majSixChord, minSixFour, majSixFour = Value
 
 
 }

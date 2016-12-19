@@ -1,5 +1,6 @@
 package models.chords
 
+import models.chords.ChordClasses._
 import models.intervals._
 import models.notes.Note
 
@@ -11,7 +12,7 @@ object ChordFinder {
 
   /***
     *
-    * @param notes There can be any number of notes, but 1-2 won't return anything. For additional
+    * @param notes There can be any number of notes, but 1-2 probably won't return anything. For additional
     *              notes, since it reduces compound intervals to simple intervals, if they're valid
     *              they'll just end up as repetitions, which are ignored as it uses Sets. So it can
     *              have as many valid notes as one wants.
@@ -22,12 +23,10 @@ object ChordFinder {
     val bass = sorted.head
     val intervals = sorted.tail.map(note => bass.diff(note).simpleInt).toSet
     intervals match {
-      case _ if isMinorTriad(intervals) =>
-        println("minor triad!")
-        None
-      case _ if isMajorTriad(intervals) =>
-        println("major triad!!")
-        None
+      case _ if isMinorTriad(intervals) => Some(Chord(bass.pitchClass, minorTriad))
+      case _ if isMajorTriad(intervals) => Some(Chord(bass.pitchClass, majorTriad))
+      case _ if isMinSixChord(intervals) => Some(Chord((bass ↑ maj6th).pitchClass, minSixChord))
+      case _ if isMajSixChord(intervals) => Some(Chord((bass ↑ min6th).pitchClass, majSixChord))
       case _ =>
         println("I don't recognise that.")
         None
@@ -72,6 +71,22 @@ object ChordFinder {
         (missingIntervals == Set(octave))
     val doesNotContainOtherIntervals = toCheck.diff(majTriad) == Set.empty[Interval]
     hasNecessaryIntervals && doesNotContainOtherIntervals
+  }
+
+  /***
+    * A minor six chord must have a m6, which is the root.
+    * Come back to this, I can't remember if it has to have the fifth or not. I know that the bass isn't normally
+    * doubled, but I think it can be. Should check and come back.
+    * @param toCheck
+    * @return
+    */
+  private def isMinSixChord(toCheck: Set[Interval]): Boolean = {
+    val minSixChord: Set[Interval] = Set(maj3rd, maj6th, octave)
+    false
+  }
+  private def isMajSixChord(toCheck: Set[Interval]): Boolean = {
+    val majSixChord: Set[Interval] = Set(min3rd, min6th, octave)
+    false
   }
 
 }
