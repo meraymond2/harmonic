@@ -1,6 +1,6 @@
 package models.notes
 
-import models.notes.PitchClasses.{A, PitchClass}
+import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.PitchLetter
 
 /**

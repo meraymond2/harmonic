@@ -50,19 +50,19 @@ class IntervalSpec extends Specification {
     }
 
     "return a P5 between A4 and E5" in {
-      val interval = findInterval(A4, E5)
+      val interval = findInterval(intervals.A4, E5)
 
       interval must_=== Some(perFifth)
     }
 
     "return a P4 between A4 and E4" in {
-      val interval = findInterval(A4, E4)
+      val interval = findInterval(intervals.A4, E4)
 
       interval must_=== Some(perFourth)
     }
 
     "return an octave between A3 and A4" in {
-      val interval = findInterval(A3, A4)
+      val interval = findInterval(A3, intervals.A4)
 
       interval must_=== Some(octave)
     }

@@ -12,7 +12,7 @@ class ToneSpec extends Specification {
 
   "up" should {
     "return the tone the specified interval above" in {
-      A3.up(octave) must_=== Some(A4)
+      A3.up(octave) must_=== Some(intervals.A4)
       A3.up(unison) must_=== Some(A3)
       A3.up(majSecond) must_=== Some(B3)
       A3.up(minThird) must_=== Some(C4)
