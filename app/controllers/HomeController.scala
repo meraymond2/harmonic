@@ -18,11 +18,6 @@ class HomeController extends Controller {
   }
 
   def test = Action {
-    println(C4.diff(C4))
-    println(C4.diff(Db4))
-    println(A3.diff(C4))
-    println(C4.diff(A3))
-    println(A1.diff(A3))
     val note1 = A3
     val note2 = E4
     val note3 = A4
