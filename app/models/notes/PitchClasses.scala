@@ -1,7 +1,7 @@
-package models
+package models.notes
 
 /**
-  * Created by michael on 17/12/16.
+  * Created by michael on 19/12/16.
   */
 
 object PitchClasses extends Enumeration {

@@ -1,6 +1,6 @@
 package models
 
-import models.Letter._
+import oldmodels.Letter._
 import org.specs2.mutable.Specification
 
 /**

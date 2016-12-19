@@ -1,8 +1,8 @@
 package models
 
-import models.Interval._
-import models.Interval.findInterval
-import models.Tone._
+import oldmodels.Interval._
+import oldmodels.Interval.findInterval
+import oldmodels.Tone._
 import org.specs2.mutable.Specification
 
 /**

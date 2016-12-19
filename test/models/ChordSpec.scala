@@ -1,8 +1,8 @@
 package models
 
-import models.ChordNames._
-import models.PitchClasses.A
-import models.Tone._
+import oldmodels.ChordNames._
+import oldmodels.PitchClasses.A
+import oldmodels.Tone._
 import org.specs2.mutable.Specification
 
 /**

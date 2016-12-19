@@ -1,4 +1,4 @@
-package models
+package oldmodels
 
 /**
   * Created by michael on 17/12/16.

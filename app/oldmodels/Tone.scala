@@ -1,8 +1,9 @@
-package models
+package oldmodels
 
-import Letter._
-import models.PitchClasses.PitchClass
-import models.PitchClasses._
+import oldmodels.PitchClasses._
+import oldmodels.Letter._
+import oldmodels.PitchClasses.PitchClass
+
 
 
 case class Tone(letter: Letter, pitchClass: PitchClass, spn: String, pitch: Int) {

@@ -1,9 +1,7 @@
 package controllers
 
 import com.google.inject.Singleton
-import models.{Chord, ChordNames, PitchClasses}
-import models.Tone._
-import models.Interval._
+import models.notes.{A0, Ab1, Cs7}
 import play.api.mvc.{Action, Controller}
 
 /**
@@ -14,9 +12,15 @@ import play.api.mvc.{Action, Controller}
 class HomeController extends Controller {
 
   def index = Action {
-    val c = Chord(A0, C1, E1, A1)
-    val blah = c.classify
-    println(blah)
+    Ok
+  }
+
+  def test = Action {
+    println(Ab1.toString)
+    println(Ab1.absPitch)
+    println(Ab1.pitchClass)
+    println(Ab1.pitchLetter)
+    println(Cs7.toString)
     Ok
   }
 
