@@ -12,8 +12,8 @@ import models.notes.PitchLetters.wrap
 
 /***
   * Notes
-  * val spn:  The scientific pitch notation, e.g. C4, Cs4, Db4. This is unique to each note.
-  * val absPitch: The specific pitch, corresponding to piano key. Multiple notes may have the same absolute pitch (enharmonically).
+  * @param spn:  The scientific pitch notation, e.g. C4, Cs4, Db4. This is unique to each note.
+  * @param absPitch: The specific pitch, corresponding to piano key. Multiple notes may have the same absolute pitch (enharmonically).
   * val pitchClass:  The note's pitch class (relative pitch), e.g. A, Bb, G#. This repeats every octave.
   * val pitchLetter: The note's letter. These are used for working out intervals.
   */
@@ -24,8 +24,7 @@ case class Note (spn: String, absPitch: Int) {
   lazy val pitchLetter: PitchLetter = PitchLetters.withName(spn.head.toString)
 
   /***
-    * Returns the difference between two notes in place, so it doesn't consider direction. It just compares
-    * the difference between the lower and higher.
+    * Returns the difference between two notes in place, so it doesn't consider direction.
     * @param otherNote The second note to compare; it doesn't matter if it's higher or lower.
     * @return A static interval. It's a bit strange to return a placeholder unknown interval instead of an
     *         option, but it works for the chord-matching, and if it needs to be returned to a user, it's

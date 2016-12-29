@@ -33,6 +33,8 @@ object ChordFinder {
     }
   }
 
+
+
   /***
     * A minor triad must have a m3.
     * It should also have either a P5 or a P8. A normal four-tone chord

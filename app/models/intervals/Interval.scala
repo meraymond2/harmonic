@@ -206,5 +206,4 @@ object IntervalsDao {
 
   val intervals: Seq[Interval] = Seq(unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, per4th, aug4th, dim5th, per5th, min6th, maj6th, min7th, maj7th, octave, min9th, maj9th, aug9th, min10th, maj10th, per11th, aug11th, dim12th, per12th, min13th, maj13th, min14th, maj14th, dblOctave)
 
-
 }

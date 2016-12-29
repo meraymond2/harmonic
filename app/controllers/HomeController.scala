@@ -2,7 +2,6 @@ package controllers
 
 import com.google.inject.Singleton
 import models.chords.ChordFinder
-import models.intervals._
 import models.notes.NotesDao._
 import play.api.mvc.{Action, Controller}
 
