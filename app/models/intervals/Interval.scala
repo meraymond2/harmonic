@@ -11,8 +11,6 @@ package models.intervals
   * val simpleInt: The corresponding simple interval for a compound interval. For
   * example, a minor tenth corresponds to a minor third (when figuring chords).
   *
-  * The instances need to be objects so that they can reference themselves.
-  * That doesn't work with instances of case classes.
   */
 
 trait Interval {

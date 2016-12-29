@@ -26,11 +26,9 @@ case class Note (spn: String, absPitch: Int) {
   lazy val pitchLetter: PitchLetter = PitchLetters.withName(spn.head.toString)
 
   /***
-    * Returns the difference between two notes in place, so it doesn't consider direction.
-    * @param otherNote The second note to compare; it doesn't matter if it's higher or lower.
-    * @return A static interval. It's a bit strange to return a placeholder unknown interval instead of an
-    *         option, but it works for the chord-matching, and if it needs to be returned to a user, it's
-    *         as good to display an unknown interval as it is to display no interval.
+    * Calls the IntervalDb.difference method with the self as the first note.
+    * @param otherNote Another note to compare against.
+    * @return The interval between the two notes.
     */
   def diff(otherNote: Note): Interval = {
     val Seq(lower, upper) = Seq(this, otherNote).sortBy(_.absPitch)
@@ -42,24 +40,21 @@ case class Note (spn: String, absPitch: Int) {
   }
 
   /***
-    * Given a note and a static interval, find the note which is above the
-    * starting note by that interval.
+    * Given another note and a static interval, finds the note which is above the
+    * starting note (the note the method is invoked upon) by that interval.
     * @param interval A static interval.
     * @return The incremented note, or the highest note if the note's not found.
     */
-  def ↑(interval: Interval): Note = {
-    NoteDb.notes.find( note =>
-      (note.absPitch == this.absPitch + interval.pitchDiff) &&
-      (note.pitchLetter.id == wrap(this.pitchLetter.id + interval.letterDiff))
-    ).getOrElse(C8)
-  }
+  def ↑(interval: Interval): Note = NoteDb.noteAbove(this, interval)
 
-  def ↓(interval: Interval): Note = {
-    NoteDb.notes.find( note =>
-      (note.absPitch == this.absPitch - interval.pitchDiff) &&
-      (note.pitchLetter.id == wrap(this.pitchLetter.id - interval.letterDiff))
-    ).getOrElse(A0)
-  }
+
+  /***
+    * Given another note and a static interval, finds the note which is below the
+    * starting note (the note the method is invoked upon) by that interval.
+    * @param interval A static interval.
+    * @return The incremented note, or the lowest note if the note's not found.
+    */
+  def ↓(interval: Interval): Note = NoteDb.noteBelow(this, interval)
 
   override def toString: String = this.spn
 }

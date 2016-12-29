@@ -1,9 +1,15 @@
 package dao
 
 import models.intervals.Interval
+import models.notes.Note
+import models.notes.PitchLetters.wrap
 
 /**
   * Created by michael on 29/12/16.
+  *
+  * The instances need to be objects so that they can reference themselves, which
+  * doesn't work with instances of case classes.
+  *
   */
 
 object IntervalDb {
@@ -189,5 +195,23 @@ object IntervalDb {
   }
 
   val intervals: Set[Interval] = Set(unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, per4th, aug4th, dim5th, per5th, min6th, maj6th, min7th, maj7th, octave, min9th, maj9th, aug9th, min10th, maj10th, per11th, aug11th, dim12th, per12th, min13th, maj13th, min14th, maj14th, dblOctave)
+
+
+  /***
+    * Returns the difference between two notes in place, so it doesn't consider direction.
+    * @param note1: The first note to compare.
+    * @param note2 The second note to compare; it doesn't matter if it's higher or lower.
+    * @return A static interval. It's a bit strange to return a placeholder unknown interval instead of an
+    *         option, but it works for the chord-matching, and if it needs to be returned to a user, it's
+    *         as good to display an unknown interval as it is to display no interval.
+    */
+  def difference(note1: Note, note2: Note): Interval = {
+    val Seq(lower, upper) = Seq(note1, note2).sortBy(_.absPitch)
+    intervals.find( interval =>
+      (interval.letterDiff == wrap(upper.pitchLetter.id - lower.pitchLetter.id))
+        &&
+      (interval.pitchDiff == upper.absPitch - lower.absPitch)
+    ).getOrElse(unknownInterval)
+  }
 
 }

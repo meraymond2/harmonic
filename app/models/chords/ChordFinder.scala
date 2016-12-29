@@ -28,13 +28,9 @@ object ChordFinder {
       case _ if isMajorTriad(intervals) => Some(Chord(bass.pitchClass, majorTriad))
       case _ if isMinSixChord(intervals) => Some(Chord((bass ↑ maj6th).pitchClass, minSixChord))
       case _ if isMajSixChord(intervals) => Some(Chord((bass ↑ min6th).pitchClass, majSixChord))
-      case _ =>
-        println("I don't recognise that.")
-        None
+      case _ => None
     }
   }
-
-
 
   /***
     * A minor triad must have a m3.

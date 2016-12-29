@@ -1,9 +1,20 @@
 package dao
 
+import models.intervals.Interval
 import models.notes.Note
+import models.notes.PitchLetters.wrap
 
 /**
   * Created by michael on 29/12/16.
+  *
+  * Note aren't technically singletons, in order to keep the code a bit cleaner,
+  * but they're treated as such. This is because at the moment I don't have a way to
+  * programatically determine a new note from a note plus an interval. For example,
+  * what is an augmented second above F? I can work out that its letter is G, and
+  * its absolute pitch, but how to get that it's a G#? For now, I just have to match
+  * it against a set of notes to determine that it's a kind of G (and not an Ab) with a
+  * specific absolute pitch.
+  *
   */
 
 object NoteDb {
@@ -143,5 +154,31 @@ object NoteDb {
     A6, As6, Bb6, B6, C7, Cs7, Db7, D7, Ds7, Eb7, E7, F7, Fs7, Gb7, G7, Gs7, Ab7,
     A7, As7, Bb7, B7, C8
   )
+
+  /***
+    * Given a note and a static interval, find the note which is above the
+    * starting note by that interval.
+    * @param startingNote The starting note.
+    * @param interval A static interval.
+    * @return The incremented note, or the highest note if the note's not found.
+    */
+  def noteAbove(startingNote: Note, interval: Interval): Note =
+    notes.find( note =>
+      (note.absPitch == startingNote.absPitch + interval.pitchDiff) &&
+      (note.pitchLetter.id == wrap(startingNote.pitchLetter.id + interval.letterDiff))
+    ).getOrElse(C8)
+
+  /***
+    * Given a note and a static interval, find the note which is below the
+    * starting note by that interval.
+    * @param startingNote The starting note.
+    * @param interval A static interval.
+    * @return The incremented note, or the lowest note if the note's not found.
+    */
+  def noteBelow(startingNote: Note, interval: Interval): Note =
+    notes.find( note =>
+      (note.absPitch == startingNote.absPitch - interval.pitchDiff) &&
+        (note.pitchLetter.id == wrap(startingNote.pitchLetter.id - interval.letterDiff))
+    ).getOrElse(A0)
 
 }
