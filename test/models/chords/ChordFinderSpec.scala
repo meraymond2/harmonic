@@ -1,8 +1,8 @@
 package models.chords
 
+import dao.NoteDb._
 import models.chords.ChordClasses._
 import models.notes.Note
-import models.notes.NotesDao._
 import models.notes.PitchClasses._
 import org.specs2.mutable.Specification
 
