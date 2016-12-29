@@ -13,6 +13,7 @@ object ChordClasses extends Enumeration {
   augmentedTriad,
   minSixChord,
   majSixChord,
+  dimSixChord,
   minSixFour,
   majSixFour = Value
 
