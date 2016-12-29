@@ -1,7 +1,8 @@
 package models.chords
 
+import dao.IntervalDb._
 import models.chords.ChordClasses._
-import models.intervals._
+import models.intervals.Interval
 import models.notes.Note
 
 /**
