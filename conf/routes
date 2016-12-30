@@ -3,7 +3,9 @@
 # ~~~~
 
 GET     /                           controllers.HomeController.index
-GET     /test                       controllers.HomeController.test
+
+# Keys
+POST    /findKeys                   controllers.KeyController.findKeys
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

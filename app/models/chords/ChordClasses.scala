@@ -1,5 +1,8 @@
 package models.chords
 
+import play.api.libs.json.Format
+import utils.EnumUtils
+
 /**
   * Created by michael on 19/12/16.
   */
@@ -57,5 +60,6 @@ object ChordClasses extends Enumeration {
   }
 
   implicit def value2ChordClassValue(chordClass: Value): ChordClassValue = new ChordClassValue(chordClass)
+  implicit val chordClassFormat: Format[ChordClass] = EnumUtils.enumJsonFormat(ChordClasses)
 
 }

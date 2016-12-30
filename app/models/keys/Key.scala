@@ -9,6 +9,7 @@ import models.notes.PitchClasses.PitchClass
 
 trait Key {
 
+  val name: String
   val tonic: PitchClass
   val supertonic: PitchClass
   val mediant: PitchClass

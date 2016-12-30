@@ -2,6 +2,7 @@ package models.chords
 
 import models.chords.ChordClasses.ChordClass
 import models.notes.PitchClasses.PitchClass
+import play.api.libs.json._
 
 /**
   * Created by michael on 19/12/16.
@@ -14,3 +15,6 @@ import models.notes.PitchClasses.PitchClass
   * @param chordClass The type of chord.
   */
 case class Chord(root: PitchClass, chordClass: ChordClass)
+object Chord {
+  implicit val chordFormat: OFormat[Chord] = Json.format[Chord]
+}

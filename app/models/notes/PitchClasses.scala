@@ -2,6 +2,8 @@ package models.notes
 
 import dao.NoteDb
 import models.intervals.Interval
+import play.api.libs.json.{Format, JsString, Json}
+import utils.EnumUtils
 
 /**
   * Created by michael on 19/12/16.
@@ -42,5 +44,6 @@ object PitchClasses extends Enumeration {
   }
 
   implicit def value2PitchClassValue(pitchClass: Value): PitchClassValue = new PitchClassValue(pitchClass)
+  implicit val pitchClassFormat: Format[PitchClass] = EnumUtils.enumJsonFormat(PitchClasses)
 
 }

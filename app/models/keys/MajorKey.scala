@@ -11,6 +11,8 @@ import models.notes.PitchClasses.PitchClass
 
 class MajorKey(root: PitchClass) extends Key {
 
+  val name: String = root.toString + " major"
+
   // Diatonic Notes
   val tonic: PitchClass            = root
   lazy val supertonic: PitchClass  = tonic ↑ maj2nd
