@@ -1,18 +1,41 @@
 package models.keys
 
-
 import models.chords.Chord
-import models.chords.ChordClasses._
-import models.notes.PitchClasses._
+import models.notes.PitchClasses.PitchClass
 
 /**
-  * Created by michael on 28/12/16.
+  * Created by michael on 29/12/16.
   */
 
-case class Key private (i: Chord, ii: Chord, iii: Chord, iv: Chord, v: Chord, vi: Chord, vii: Chord)
+trait Key {
 
-object KeyDao {
+  val name: String
+  val tonic: PitchClass
+  val supertonic: PitchClass
+  val mediant: PitchClass
+  val subdominant: PitchClass
+  val dominant: PitchClass
+  val submediant: PitchClass
+  val leadingTone: PitchClass
 
-//  val Amin = Key(Chord(A, minorTriad), Chord(B, diminishedTriad), Chord(C, augmentedTriad), Chord(D, minorTriad), Chord(E, majorTriad))
+  val chords: Set[Chord]
 
+  def contains(chord: Chord): Boolean = chords.contains(chord)
+
+  /***
+    * For a given pitch-class, returns it's position in the key, or None if
+    * it's not a member of that key.
+    * @param pitchClass a pitch-class to check
+    * @return A string describing the scale degree.
+    */
+  def scaleDegree(pitchClass: PitchClass): Option[String] = pitchClass match {
+    case `tonic` => Some("Tonic")
+    case `supertonic` => Some("Supertonic")
+    case `mediant` => Some("Mediant")
+    case `subdominant` => Some("Subdominant")
+    case `dominant` => Some("Dominant")
+    case `submediant` => Some("Submediant")
+    case `leadingTone` => Some("Leading Tone")
+    case _ => None
+  }
 }

@@ -1,7 +1,8 @@
 package dao
 
 import models.intervals.Interval
-import models.notes.Note
+import models.notes.{Note, PitchClasses}
+import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.wrap
 
 /**
@@ -144,7 +145,7 @@ object NoteDb {
   val B7 = Note("B7", 87)
   val C8 = Note("C8", 88)
 
-  val notes = Set(
+  val notes = Seq(
     A0, As0, Bb0, B0, C1, Cs1, Db1, D1, Ds1, Eb1, E1, F1, Fs1, Gb1, G1, Gs1, Ab1,
     A1, As1, Bb1, B1, C2, Cs2, Db2, D2, Ds2, Eb2, E2, F2, Fs2, Gb2, G2, Gs2, Ab2,
     A2, As2, Bb2, B2, C3, Cs3, Db3, D3, Ds3, Eb3, E3, F3, Fs3, Gb3, G3, Gs3, Ab3,
@@ -180,5 +181,22 @@ object NoteDb {
       (note.absPitch == startingNote.absPitch - interval.pitchDiff) &&
         (note.pitchLetter.id == wrap(startingNote.pitchLetter.id - interval.letterDiff))
     ).getOrElse(A0)
+
+  /***
+    * Returns the first note matching a given pitch-class. (Used for applying
+    * intervals to pitch-classes).
+    * @param pitchClass A given pitch-class.
+    * @return The first note of that pitch-class.
+    */
+  def findFirst(pitchClass: PitchClass): Note = notes.filter(_.pitchClass == pitchClass).head
+
+  /***
+    * Returns the last note matching a given pitch-class. (Used for applying
+    * intervals to pitch-classes).
+    * @param pitchClass A given pitch-class.
+    * @return The last note of that pitch-class.
+    */
+  def findLast(pitchClass: PitchClass): Note = notes.filter(_.pitchClass == pitchClass).reverse.head
+
 
 }

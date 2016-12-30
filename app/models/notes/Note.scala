@@ -26,18 +26,11 @@ case class Note (spn: String, absPitch: Int) {
   lazy val pitchLetter: PitchLetter = PitchLetters.withName(spn.head.toString)
 
   /***
-    * Calls the IntervalDb.difference method with the self as the first note.
+    * Calls the IntervalDb.harmonicInterval method with the self as the first note.
     * @param otherNote Another note to compare against.
     * @return The interval between the two notes.
     */
-  def diff(otherNote: Note): Interval = {
-    val Seq(lower, upper) = Seq(this, otherNote).sortBy(_.absPitch)
-    IntervalDb.intervals.find( interval =>
-      (interval.letterDiff == wrap(upper.pitchLetter.id - lower.pitchLetter.id))
-        &&
-      (interval.pitchDiff == upper.absPitch - lower.absPitch)
-    ).getOrElse(unknownInterval)
-  }
+  def diff(otherNote: Note): Interval = IntervalDb.harmonicInterval(this, otherNote)
 
   /***
     * Given another note and a static interval, finds the note which is above the

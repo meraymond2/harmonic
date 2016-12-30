@@ -1,6 +1,6 @@
 package dao
 
-import models.intervals.Interval
+import models.intervals.{Interval, MelodicInterval}
 import models.notes.Note
 import models.notes.PitchLetters.wrap
 
@@ -198,20 +198,26 @@ object IntervalDb {
 
 
   /***
-    * Returns the difference between two notes in place, so it doesn't consider direction.
+    * Returns the harmonic interval between two notes (doesn't consider direction).
     * @param note1: The first note to compare.
     * @param note2 The second note to compare; it doesn't matter if it's higher or lower.
     * @return A static interval. It's a bit strange to return a placeholder unknown interval instead of an
     *         option, but it works for the chord-matching, and if it needs to be returned to a user, it's
     *         as good to display an unknown interval as it is to display no interval.
     */
-  def difference(note1: Note, note2: Note): Interval = {
+  def harmonicInterval(note1: Note, note2: Note): Interval = {
     val Seq(lower, upper) = Seq(note1, note2).sortBy(_.absPitch)
     intervals.find( interval =>
       (interval.letterDiff == wrap(upper.pitchLetter.id - lower.pitchLetter.id))
         &&
       (interval.pitchDiff == upper.absPitch - lower.absPitch)
     ).getOrElse(unknownInterval)
+  }
+
+  def melodicInterval(note1: Note, note2: Note): MelodicInterval = {
+    val direction = if (note2.absPitch > note1.absPitch) "asc" else "desc"
+    val interval = harmonicInterval(note1, note2)
+    MelodicInterval(interval, direction)
   }
 
 }
