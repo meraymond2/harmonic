@@ -29,13 +29,13 @@ trait Key {
     * @return A string describing the scale degree.
     */
   def scaleDegree(pitchClass: PitchClass): Option[String] = pitchClass match {
-    case pC if pC == tonic => Some("Tonic")
-    case pC if pC == supertonic => Some("Supertonic")
-    case pC if pC == mediant => Some("Mediant")
-    case pC if pC == subdominant => Some("Subdominant")
-    case pC if pC == dominant => Some("Dominant")
-    case pC if pC == submediant => Some("Submediant")
-    case pC if pC == leadingTone => Some("Leading Tone")
+    case `tonic` => Some("Tonic")
+    case `supertonic` => Some("Supertonic")
+    case `mediant` => Some("Mediant")
+    case `subdominant` => Some("Subdominant")
+    case `dominant` => Some("Dominant")
+    case `submediant` => Some("Submediant")
+    case `leadingTone` => Some("Leading Tone")
     case _ => None
   }
 }
