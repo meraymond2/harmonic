@@ -14,8 +14,4 @@ class HomeController extends Controller {
     Ok
   }
 
-  def test = Action {
-    Ok
-  }
-
 }
