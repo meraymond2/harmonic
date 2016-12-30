@@ -50,6 +50,12 @@ object IntervalDb {
     override val simpleInt: Interval = maj3rd
   }
 
+  object dim4th extends Interval {
+    override val pitchDiff: Int = 4
+    override val letterDiff: Int = 3
+    override val simpleInt: Interval = dim4th
+  }
+
   object per4th extends Interval {
     override val pitchDiff: Int = 5
     override val letterDiff: Int = 3
@@ -74,6 +80,12 @@ object IntervalDb {
     override val simpleInt: Interval = per5th
   }
 
+  object aug5th extends Interval {
+    override val pitchDiff: Int = 8
+    override val letterDiff: Int = 4
+    override val simpleInt: Interval = aug5th
+  }
+
   object min6th extends Interval {
     override val pitchDiff: Int = 8
     override val letterDiff: Int = 5
@@ -84,6 +96,12 @@ object IntervalDb {
     override val pitchDiff: Int = 9
     override val letterDiff: Int = 5
     override val simpleInt: Interval = maj6th
+  }
+
+  object dim7th extends Interval {
+    override val pitchDiff: Int = 9
+    override val letterDiff: Int = 6
+    override val simpleInt: Interval = dim7th
   }
 
   object min7th extends Interval {
@@ -134,6 +152,12 @@ object IntervalDb {
     override val simpleInt: Interval = maj3rd
   }
 
+  object dim11th extends Interval {
+    override val pitchDiff: Int = 16
+    override val letterDiff: Int = 3
+    override val simpleInt: Interval = dim4th
+  }
+
   object per11th extends Interval {
     override val pitchDiff: Int = 17
     override val letterDiff: Int = 3
@@ -158,6 +182,12 @@ object IntervalDb {
     override val simpleInt: Interval = per5th
   }
 
+  object aug12th extends Interval {
+    override val pitchDiff: Int = 20
+    override val letterDiff: Int = 4
+    override val simpleInt: Interval = aug5th
+  }
+
   object min13th extends Interval {
     override val pitchDiff: Int = 20
     override val letterDiff: Int = 5
@@ -168,6 +198,12 @@ object IntervalDb {
     override val pitchDiff: Int = 21
     override val letterDiff: Int = 5
     override val simpleInt: Interval = maj6th
+  }
+
+  object dim14th extends Interval {
+    override val pitchDiff: Int = 21
+    override val letterDiff: Int = 6
+    override val simpleInt: Interval = dim7th
   }
 
   object min14th extends Interval {
@@ -194,7 +230,7 @@ object IntervalDb {
     override val simpleInt: Interval = unknownInterval
   }
 
-  val intervals: Set[Interval] = Set(unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, per4th, aug4th, dim5th, per5th, min6th, maj6th, min7th, maj7th, octave, min9th, maj9th, aug9th, min10th, maj10th, per11th, aug11th, dim12th, per12th, min13th, maj13th, min14th, maj14th, dblOctave)
+  val intervals: Set[Interval] = Set(unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, dim4th, per4th, aug4th, dim5th, per5th, aug5th, min6th, maj6th, dim7th, min7th, maj7th, octave, min9th, maj9th, aug9th, min10th, maj10th, dim11th, per11th, aug11th, dim12th, per12th, aug12th, min13th, maj13th, dim14th, min14th, maj14th, dblOctave)
 
 
   /***
