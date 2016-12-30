@@ -224,13 +224,122 @@ object IntervalDb {
     override val simpleInt: Interval = octave
   }
 
+  object min16th extends Interval {
+    override val pitchDiff: Int = 25
+    override val letterDiff: Int = 1
+    override val simpleInt: Interval = min2nd
+  }
+
+  object maj16th extends Interval {
+    override val pitchDiff: Int = 26
+    override val letterDiff: Int = 1
+    override val simpleInt: Interval = maj2nd
+  }
+
+  object aug16th extends Interval {
+    override val pitchDiff: Int = 27
+    override val letterDiff: Int = 1
+    override val simpleInt: Interval = aug2nd
+  }
+
+  object min17th extends Interval {
+    override val pitchDiff: Int = 27
+    override val letterDiff: Int = 2
+    override val simpleInt: Interval = min3rd
+  }
+
+  object maj17th extends Interval {
+    override val pitchDiff: Int = 28
+    override val letterDiff: Int = 2
+    override val simpleInt: Interval = maj3rd
+  }
+
+  object dim18th extends Interval {
+    override val pitchDiff: Int = 28
+    override val letterDiff: Int = 3
+    override val simpleInt: Interval = dim4th
+  }
+
+  object per18th extends Interval {
+    override val pitchDiff: Int = 29
+    override val letterDiff: Int = 3
+    override val simpleInt: Interval = per4th
+  }
+
+  object aug18th extends Interval {
+    override val pitchDiff: Int = 30
+    override val letterDiff: Int = 3
+    override val simpleInt: Interval = aug4th
+  }
+
+  object dim19th extends Interval {
+    override val pitchDiff: Int = 30
+    override val letterDiff: Int = 4
+    override val simpleInt: Interval = dim5th
+  }
+
+  object per19th extends Interval {
+    override val pitchDiff: Int = 31
+    override val letterDiff: Int = 4
+    override val simpleInt: Interval = per5th
+  }
+
+  object aug19th extends Interval {
+    override val pitchDiff: Int = 32
+    override val letterDiff: Int = 4
+    override val simpleInt: Interval = aug5th
+  }
+
+  object min20th extends Interval {
+    override val pitchDiff: Int = 32
+    override val letterDiff: Int = 5
+    override val simpleInt: Interval = min6th
+  }
+
+  object maj20th extends Interval {
+    override val pitchDiff: Int = 33
+    override val letterDiff: Int = 5
+    override val simpleInt: Interval = maj6th
+  }
+
+  object dim21th extends Interval {
+    override val pitchDiff: Int = 33
+    override val letterDiff: Int = 6
+    override val simpleInt: Interval = dim7th
+  }
+
+  object min21th extends Interval {
+    override val pitchDiff: Int = 34
+    override val letterDiff: Int = 6
+    override val simpleInt: Interval = min7th
+  }
+
+  object maj21th extends Interval {
+    override val pitchDiff: Int = 35
+    override val letterDiff: Int = 6
+    override val simpleInt: Interval = maj7th
+  }
+
+  object trplOctave extends Interval {
+    override val pitchDiff: Int = 36
+    override val letterDiff: Int = 0
+    override val simpleInt: Interval = octave
+  }
+
   object unknownInterval extends Interval {
     override val pitchDiff: Int = 999
     override val letterDiff: Int = 999
     override val simpleInt: Interval = unknownInterval
   }
 
-  val intervals: Set[Interval] = Set(unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, dim4th, per4th, aug4th, dim5th, per5th, aug5th, min6th, maj6th, dim7th, min7th, maj7th, octave, min9th, maj9th, aug9th, min10th, maj10th, dim11th, per11th, aug11th, dim12th, per12th, aug12th, min13th, maj13th, dim14th, min14th, maj14th, dblOctave)
+  val intervals: Set[Interval] = Set(
+    unison, min2nd, maj2nd, aug2nd, min3rd, maj3rd, dim4th, per4th, aug4th,
+    dim5th, per5th, aug5th, min6th, maj6th, dim7th, min7th, maj7th, octave,
+    min9th, maj9th, aug9th, min10th, maj10th, dim11th, per11th, aug11th,
+    dim12th, per12th, aug12th, min13th, maj13th, dim14th, min14th, maj14th, dblOctave,
+    min16th, maj16th, aug16th, min17th, maj17th, dim18th, per18th, aug18th,
+    dim19th, per19th, aug19th, min20th, maj20th, dim21th, min21th, maj21th, trplOctave
+  )
 
 
   /***
