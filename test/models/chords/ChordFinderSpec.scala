@@ -19,28 +19,20 @@ class ChordFinderSpec extends Specification {
 
   "findChord" should {
 
-    "return a minor triad" in {
-      val notes: Seq[Note] = Seq(A3, C4, E4, A4)
-      val chord = waitFor( ChordFinder.findChord(notes:_*) )
-      chord must beSome(Chord(A, minorTriad))
+    "find minor triads" in {
+      val chord = waitFor(ChordFinder.findChord(A3, C4, E4, A4))
+      chord must beSome( Chord(A, minorTriad) )
+
+      val chord2 = waitFor(ChordFinder.findChord(D3, F3, A3, D4))
+      chord2 must beSome( Chord(D, minorTriad))
     }
 
-    "return a minor triad" in {
-      val notes: Seq[Note] = Seq(E2, E3, G3, B3)
-      val chord = waitFor( ChordFinder.findChord(notes:_*) )
-      chord must beSome(Chord(E, minorTriad))
-    }
+    "find major triads" in {
+      val chord1 = waitFor(ChordFinder.findChord(E3, Gs4, E4, B4))
+      chord1 must beSome (Chord(E, majorTriad))
 
-    "return a minor triad if the fifth is doubled" in {
-      val notes: Seq[Note] = Seq(D3, A3, F4, A4)
-      val chord = waitFor( ChordFinder.findChord(notes:_*) )
-      chord must beSome(Chord(D, minorTriad))
-    }
-
-    "return a minor triad if the fifth is missing" in {
-      val notes: Seq[Note] = Seq(A3, C4, A4)
-      val chord = waitFor( ChordFinder.findChord(notes:_*) )
-      chord must beSome(Chord(A, minorTriad))
+      val chord2 = waitFor(ChordFinder.findChord(F3, A4, C5, A5))
+      chord2 must beSome (Chord(F, majorTriad))
     }
 
   }

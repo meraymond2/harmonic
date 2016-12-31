@@ -1,7 +1,7 @@
 package dao
 
-import models.intervals.Interval
-import models.notes.{Note, PitchClasses}
+import models.intervals.HarmonicInterval
+import models.notes.Note
 import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.wrap
 
@@ -163,7 +163,7 @@ object NoteDb {
     * @param interval A static interval.
     * @return The incremented note, or the highest note if the note's not found.
     */
-  def noteAbove(startingNote: Note, interval: Interval): Note =
+  def noteAbove(startingNote: Note, interval: HarmonicInterval): Note =
     notes.find( note =>
       (note.absPitch == startingNote.absPitch + interval.pitchDiff) &&
       (note.pitchLetter.id == wrap(startingNote.pitchLetter.id + interval.letterDiff))
@@ -176,7 +176,7 @@ object NoteDb {
     * @param interval A static interval.
     * @return The incremented note, or the lowest note if the note's not found.
     */
-  def noteBelow(startingNote: Note, interval: Interval): Note =
+  def noteBelow(startingNote: Note, interval: HarmonicInterval): Note =
     notes.find( note =>
       (note.absPitch == startingNote.absPitch - interval.pitchDiff) &&
         (note.pitchLetter.id == wrap(startingNote.pitchLetter.id - interval.letterDiff))

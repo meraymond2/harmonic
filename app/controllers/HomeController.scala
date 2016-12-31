@@ -1,6 +1,8 @@
 package controllers
 
 import com.google.inject.Singleton
+import dao.IntervalDb
+import dao.NoteDb._
 import play.api.mvc.{Action, Controller}
 
 /**

@@ -1,8 +1,8 @@
 package models.notes
 
 import dao.NoteDb
-import models.intervals.Interval
-import play.api.libs.json.{Format, JsString, Json}
+import models.intervals.HarmonicInterval
+import play.api.libs.json.Format
 import utils.EnumUtils
 
 /**
@@ -39,8 +39,8 @@ object PitchClasses extends Enumeration {
       * @param interval The interval to apply.
       * @return The pitch-class a given interval above the starting pitch-class.
       */
-    def ↑(interval: Interval): PitchClass = (NoteDb.findFirst(this.pitchClass) ↑ interval).pitchClass
-    def ↓(interval: Interval): PitchClass = (NoteDb.findLast(this.pitchClass) ↓ interval).pitchClass
+    def ↑(interval: HarmonicInterval): PitchClass = (NoteDb.findFirst(this.pitchClass) ↑ interval).pitchClass
+    def ↓(interval: HarmonicInterval): PitchClass = (NoteDb.findLast(this.pitchClass) ↓ interval).pitchClass
   }
 
   implicit def value2PitchClassValue(pitchClass: Value): PitchClassValue = new PitchClassValue(pitchClass)
