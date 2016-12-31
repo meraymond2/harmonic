@@ -2,7 +2,7 @@ package models.chords
 
 import dao.IntervalDb._
 import models.chords.ChordClasses._
-import models.intervals.Interval
+import models.intervals.HarmonicInterval
 import models.notes.Note
 
 import scala.concurrent.Future
@@ -25,7 +25,7 @@ object ChordFinder {
   def findChord(notes: Note*): Future[Option[Chord]] = Future {
     val sorted = notes.sortBy(_.absPitch)
     val bass = sorted.head
-    val intervals = sorted.tail.map(note => bass.diff(note).simpleInt).toSet
+    val intervals = sorted.tail.map(note => bass.diff(note)).toSet
     intervals match {
         // Triads
       case _ if isMinorTriad(intervals) => Some(Chord(bass.pitchClass, minorTriad))
@@ -82,8 +82,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be a minor triad.
     */
-  private def isMinorTriad(toCheck: Set[Interval]): Boolean = {
-    val minTriad: Set[Interval] = Set(min3rd, per5th, octave)
+  private def isMinorTriad(toCheck: Set[HarmonicInterval]): Boolean = {
+    val minTriad: Set[HarmonicInterval] = Set(min3rd, per5th, octave)
     val missingIntervals = minTriad.diff(toCheck)
     val hasNecessaryIntervals =
       missingIntervals.isEmpty ||
@@ -103,8 +103,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be the first inversion of a minor triad.
     */
-  private def isMinSixChord(toCheck: Set[Interval]): Boolean = {
-    val minSixChord: Set[Interval] = Set(maj3rd, maj6th)
+  private def isMinSixChord(toCheck: Set[HarmonicInterval]): Boolean = {
+    val minSixChord: Set[HarmonicInterval] = Set(maj3rd, maj6th)
     minSixChord == toCheck
   }
 
@@ -117,8 +117,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be the second inversion of a minor triad.
     */
-  private def isMinSixFourChord(toCheck: Set[Interval]): Boolean = {
-    val minSixFourChord: Set[Interval] = Set(per4th, min6th, octave)
+  private def isMinSixFourChord(toCheck: Set[HarmonicInterval]): Boolean = {
+    val minSixFourChord: Set[HarmonicInterval] = Set(per4th, min6th, octave)
     val missingIntervals = minSixFourChord.diff(toCheck)
     val hasNecessaryIntervals =
       missingIntervals.isEmpty ||
@@ -139,8 +139,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be a major triad.
     */
-  private def isMajorTriad(toCheck: Set[Interval]): Boolean = {
-    val majTriad: Set[Interval] = Set(maj3rd, per5th, octave)
+  private def isMajorTriad(toCheck: Set[HarmonicInterval]): Boolean = {
+    val majTriad: Set[HarmonicInterval] = Set(maj3rd, per5th, octave)
     val missingIntervals = majTriad.diff(toCheck)
     val hasNecessaryIntervals =
       missingIntervals.isEmpty ||
@@ -160,8 +160,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be the first inversion of a major triad.
     */
-  private def isMajSixChord(toCheck: Set[Interval]): Boolean = {
-    val majSixChord: Set[Interval] = Set(min3rd, min6th)
+  private def isMajSixChord(toCheck: Set[HarmonicInterval]): Boolean = {
+    val majSixChord: Set[HarmonicInterval] = Set(min3rd, min6th)
     majSixChord == toCheck
   }
 
@@ -174,8 +174,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be the second inversion of a major triad.
     */
-  private def isMajSixFourChord(toCheck: Set[Interval]): Boolean = {
-    val majSixFourChord: Set[Interval] = Set(per4th, maj6th, octave)
+  private def isMajSixFourChord(toCheck: Set[HarmonicInterval]): Boolean = {
+    val majSixFourChord: Set[HarmonicInterval] = Set(per4th, maj6th, octave)
     val missingIntervals = majSixFourChord.diff(toCheck)
     val hasNecessaryIntervals =
       missingIntervals.isEmpty ||
@@ -200,8 +200,8 @@ object ChordFinder {
     * @param toCheck The set of intervals to be checked.
     * @return whether the intervals can be a diminished triad.
     */
-  private def isDimTriad(toCheck: Set[Interval]): Boolean = {
-    val dimTriad: Set[Interval] = Set(min3rd, dim5th)
+  private def isDimTriad(toCheck: Set[HarmonicInterval]): Boolean = {
+    val dimTriad: Set[HarmonicInterval] = Set(min3rd, dim5th)
     dimTriad == toCheck
   }
 
@@ -212,8 +212,8 @@ object ChordFinder {
     * @param toCheck
     * @return
     */
-  private def isDimSixChord(toCheck: Set[Interval]): Boolean = {
-    val dimSixChord: Set[Interval] = Set(min3rd, maj6th)
+  private def isDimSixChord(toCheck: Set[HarmonicInterval]): Boolean = {
+    val dimSixChord: Set[HarmonicInterval] = Set(min3rd, maj6th)
     dimSixChord == toCheck
   }
 
@@ -249,7 +249,7 @@ object ChordFinder {
   /***
     * A minor triad plus a minor seventh.
     */
-  private def isMinorSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isMinorSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorSeventh = Set(min3rd, per5th, min7th, octave)
     val missingIntervals = minorSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -263,7 +263,7 @@ object ChordFinder {
   /***
     * A minor triad plus a major seventh.
     */
-  private def isMinorMajorSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isMinorMajorSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorMajorSeventh = Set(min3rd, per5th, maj7th, octave)
     val missingIntervals = minorMajorSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -277,7 +277,7 @@ object ChordFinder {
   /***
     * A major triad plus a minor seventh.
     */
-  private def isDominantSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isDominantSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val dominantSeventh = Set(maj3rd, per5th, min7th, octave)
     val missingIntervals = dominantSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -291,7 +291,7 @@ object ChordFinder {
   /***
     * A major triad plus a major seventh.
     */
-  private def isMajorSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isMajorSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val majorSeventh = Set(maj3rd, per5th, maj7th, octave)
     val missingIntervals = majorSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -305,7 +305,7 @@ object ChordFinder {
   /***
     * A diminished triad plus a diminished seventh (minor third above the fifth).
     */
-  private def isDiminishedSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isDiminishedSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val diminishedSeventh = Set(min3rd, dim5th, dim7th, octave)
     val missingIntervals = diminishedSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -319,7 +319,7 @@ object ChordFinder {
   /***
     * A diminished triad plus a minor seventh (major third above the fifth).
     */
-  private def isHalfDiminishedSeventh(toCheck: Set[Interval]): Boolean = {
+  private def isHalfDiminishedSeventh(toCheck: Set[HarmonicInterval]): Boolean = {
     val halfDiminishedSeventh = Set(min3rd, dim5th, min7th, octave)
     val missingIntervals = halfDiminishedSeventh.diff(toCheck)
     val hasNecessaryIntervals =
@@ -338,7 +338,7 @@ object ChordFinder {
     * In figured bass, they're 6-5 chords, or 6-5-3 (where 3 is the chord-fifth).
     */
 
-  private def isMinorSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorSeventhFirstInv = Set(maj3rd, per5th, maj6th)
     val missingIntervals = minorSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -348,7 +348,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isMinorMajorSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorMajorSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorMajorSeventhFirstInv = Set(maj3rd, aug5th, maj6th)
     val missingIntervals = minorMajorSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -358,7 +358,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isDominantSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isDominantSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val dominantSeventhFirstInv = Set(min3rd, dim5th, min6th)
     val missingIntervals = dominantSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -368,7 +368,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isMajorSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isMajorSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val majorSeventhFirstInv = Set(min3rd, per5th, min6th)
     val missingIntervals = majorSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -378,7 +378,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isDiminishedSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isDiminishedSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val diminishedSeventhFirstInv = Set(min3rd, dim5th, maj6th)
     val missingIntervals = diminishedSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -388,7 +388,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isHalfDimSeventhFirstInv(toCheck: Set[Interval]): Boolean = {
+  private def isHalfDimSeventhFirstInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val halfDimSeventhFirstInv = Set(min3rd, per5th, maj6th)
     val missingIntervals = halfDimSeventhFirstInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -405,27 +405,27 @@ object ChordFinder {
     * In figured bass these are 4-3 chords, short for 6-4-3.
     */
 
-  private def isMinorSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorSeventhSecondInv = Set(min3rd, per4th, min6th)
     minorSeventhSecondInv == toCheck
   }
-  private def isMinorMajorSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorMajorSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorMajorSeventhSecondInv = Set(maj3rd, per4th, min6th)
     minorMajorSeventhSecondInv == toCheck
   }
-  private def isDominantSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isDominantSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val dominantSeventhSecondInv = Set(min3rd, per4th, maj6th)
     dominantSeventhSecondInv == toCheck
   }
-  private def isMajorSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isMajorSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val majorSeventhSecondInv = Set(maj3rd, per4th, maj6th)
     majorSeventhSecondInv == toCheck
   }
-  private def isDiminishedSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isDiminishedSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val diminishedSeventhSecondInv = Set(min3rd, aug4th, maj6th)
     diminishedSeventhSecondInv == toCheck
   }
-  private def isHalfDimSeventhSecondInv(toCheck: Set[Interval]): Boolean = {
+  private def isHalfDimSeventhSecondInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val halfDimSeventhSecondInv = Set(maj3rd, aug4th, maj6th)
     halfDimSeventhSecondInv == toCheck
   }
@@ -435,7 +435,7 @@ object ChordFinder {
     * or 6-4-2. The 6 is the chord fifth, and may be omitted I think.
     */
 
-  private def isMinorSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorSeventhThirdInv = Set(maj2nd, per4th, maj6th)
     val missingIntervals = minorSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -445,7 +445,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isMinorMajorSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isMinorMajorSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val minorMajorSeventhThirdInv = Set(min2nd, dim4th, min6th)
     val missingIntervals = minorMajorSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -455,7 +455,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isDominantSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isDominantSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val dominantSeventhThirdInv = Set(maj2nd, aug4th, maj6th)
     val missingIntervals = dominantSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -465,7 +465,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isMajorSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isMajorSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val majorSeventhThirdInv = Set(min2nd, per4th, min6th)
     val missingIntervals = majorSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -475,7 +475,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isDiminishedSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isDiminishedSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val diminishedSeventhThirdInv = Set(aug2nd, aug4th, maj6th)
     val missingIntervals = diminishedSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =
@@ -485,7 +485,7 @@ object ChordFinder {
     hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
-  private def isHalfDimSeventhThirdInv(toCheck: Set[Interval]): Boolean = {
+  private def isHalfDimSeventhThirdInv(toCheck: Set[HarmonicInterval]): Boolean = {
     val halfDimSeventhThirdInv = Set(maj2nd, per4th, min6th)
     val missingIntervals = halfDimSeventhThirdInv.diff(toCheck)
     val hasNecessaryIntervals =

@@ -1,12 +1,9 @@
 package models.notes
 
-import dao.IntervalDb.unknownInterval
 import dao.{IntervalDb, NoteDb}
-import dao.NoteDb.{A0, C8}
-import models.intervals.Interval
+import models.intervals.HarmonicInterval
 import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.PitchLetter
-import models.notes.PitchLetters.wrap
 
 /**
   * Created by michael on 19/12/16.
@@ -30,7 +27,7 @@ case class Note (spn: String, absPitch: Int) {
     * @param otherNote Another note to compare against.
     * @return The interval between the two notes.
     */
-  def diff(otherNote: Note): Interval = IntervalDb.harmonicInterval(this, otherNote)
+  def diff(otherNote: Note): HarmonicInterval = IntervalDb.harmonicInterval(this, otherNote)
 
   /***
     * Given another note and a static interval, finds the note which is above the
@@ -38,7 +35,7 @@ case class Note (spn: String, absPitch: Int) {
     * @param interval A static interval.
     * @return The incremented note, or the highest note if the note's not found.
     */
-  def ↑(interval: Interval): Note = NoteDb.noteAbove(this, interval)
+  def ↑(interval: HarmonicInterval): Note = NoteDb.noteAbove(this, interval)
 
 
   /***
@@ -47,7 +44,7 @@ case class Note (spn: String, absPitch: Int) {
     * @param interval A static interval.
     * @return The incremented note, or the lowest note if the note's not found.
     */
-  def ↓(interval: Interval): Note = NoteDb.noteBelow(this, interval)
+  def ↓(interval: HarmonicInterval): Note = NoteDb.noteBelow(this, interval)
 
   override def toString: String = this.spn
 }

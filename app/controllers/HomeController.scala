@@ -13,7 +13,6 @@ import play.api.mvc.{Action, Controller}
 class HomeController extends Controller {
 
   def index = Action {
-    println( IntervalDb.harmonicInterval(Gs2, C3) )
     Ok
   }
 

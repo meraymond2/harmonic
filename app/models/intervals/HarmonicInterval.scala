@@ -8,13 +8,7 @@ package models.intervals
   * val pitchDiff: The number of half-steps in the interval.
   * val letterDiff: The difference between the letters' indices. Note that this
   * number is one less than the common name. So C-A = 3 - 1 = 2 = a third.
-  * val simpleInt: The corresponding simple interval for a compound interval. For
-  * example, a minor tenth corresponds to a minor third (when figuring chords).
   *
   */
 
-trait Interval {
-  val pitchDiff: Int
-  val letterDiff: Int
-  val simpleInt: Interval
-}
+case class HarmonicInterval(name: String, pitchDiff: Int, letterDiff: Int)
