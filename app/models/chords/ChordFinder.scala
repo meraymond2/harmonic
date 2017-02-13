@@ -15,7 +15,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object ChordFinder {
 
   /***
-    * I've wrapped this in a future, because it might become time consuming to do all of those checks.
     * @param notes There can be any number of notes, but 1-2 probably won't return anything. For additional
     *              notes, since it reduces compound intervals to simple intervals, if they're valid
     *              they'll just end up as repetitions, which are ignored as it uses Sets. So it can
