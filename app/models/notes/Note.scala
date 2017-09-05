@@ -1,9 +1,11 @@
 package models.notes
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import dao.{IntervalDb, NoteDb}
 import models.intervals.HarmonicInterval
 import models.notes.PitchClasses.PitchClass
 import models.notes.PitchLetters.PitchLetter
+import play.api.libs.json.{Json, OFormat}
 
 /**
   * Created by michael on 19/12/16.
@@ -47,4 +49,10 @@ case class Note (spn: String, absPitch: Int) {
   def ↓(interval: HarmonicInterval): Note = NoteDb.noteBelow(this, interval)
 
   override def toString: String = this.spn
+}
+
+object Note {
+
+  implicit val noteFormat: OFormat[Note] = Json.format[Note]
+
 }
