@@ -13,7 +13,7 @@ import play.api.mvc.{Action, Controller}
 class HomeController extends Controller {
 
   def index = Action {
-    Ok
+    Ok(views.html.home())
   }
 
 }

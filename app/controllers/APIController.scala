@@ -1,12 +1,10 @@
 package controllers
 
 import dao.KeyDb
-import models.chords.{Chord, ChordClasses}
+import models.chords.{Chord, ChordClasses, ChordFinder}
 import models.notes.{Note, PitchClasses}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import dao.NoteDb.{A3, A4, C4, E4}
-import models.chords.ChordFinder
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -26,22 +24,19 @@ class APIController extends Controller {
     )
   }
 
-  def findChord = Action { implicit req =>
-    req.body.asJson.fold(BadRequest(Json.obj()))(json => {
-      println(json.as[Seq[Note]])
-      Ok(json)
-    })
-//    val js = Json.obj(
-//      "spn" -> "A3",
-//      "absPitch" -> 37
-//    )
-//    val ok = js.as[Note]
-//    val bass = A3
-//    val tenor = E4
-//    val alto = C4
-//    val soprano = A4
-//    println(ok)
-//    ChordFinder.findChord(bass, tenor, alto, soprano).foreach(_.foreach(println))
+  def findChord = Action.async { implicit req =>
+    req.body.asJson.fold(Future(BadRequest(Json.obj())))(json =>
+      json.asOpt[Seq[Note]].fold(Future(BadRequest(Json.obj())))(notes =>
+        ChordFinder.findChord(notes:_*).flatMap(_.fold(Future(Ok(Json.obj("msg" -> "No Chord"))))(chord => {
+          KeyDb.findKeys(chord).map(keys =>
+            Ok(Json.obj(
+              "chord" -> chord,
+              "keys" -> Json.toJson(keys.map(key => key.name))
+            ))
+          )
+        }))
+      )
+    )
   }
 
 }
