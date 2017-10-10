@@ -2,7 +2,7 @@ import React from "react";
 
 import { chunk } from "./utils";
 
-const Selects = (noteSpns, handleChange, submit) =>
+const Selects = ({ noteSpns, handleChange, submit, selected }) =>
     <div>
         <div>
             {chunk(noteSpns, 17).map((octave, index) =>

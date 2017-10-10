@@ -15,7 +15,8 @@ class App extends React.Component {
                 chordClass: "",
                 root: ""
             },
-            keys: []
+            keys: [],
+            error: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
@@ -37,6 +38,7 @@ class App extends React.Component {
     }
 
     submit() {
+        this.setState({ error: "" });
         const selectedNotes = Object.keys(this.state.selected).reduce((acc, octave) => acc.concat(this.state.selected[octave]), []);
         const fullNotes = selectedNotes.map(spn => this.state.notesBySpn[spn]);
         fetch("/api/chord", {
@@ -48,7 +50,7 @@ class App extends React.Component {
         }).then(checkStatusAndGetJSON).then(json => this.setState({
             chord: json.chord,
             keys: json.keys
-        })).catch(console.error);
+        })).catch(error => this.setState({ error: error.msg }));
     }
 
     render() {
@@ -56,10 +58,17 @@ class App extends React.Component {
             <div>
                 <Selects
                     noteSpns={this.state.noteSpns}
+                    selected={this.state.selected}
                     handleChange={this.handleChange}
                     submit={this.submit}
                 />
-                <p></p>
+                <p style={{ color: "red" }}>{this.state.error}</p>
+                <p>{this.state.chord.root} {this.state.chord.chordClass}</p>
+                <ul>
+                    {this.state.keys.map(key =>
+                        <li>{key}</li>
+                    )}
+                </ul>
             </div>
         );
     }
