@@ -10,6 +10,7 @@
     "npm": "4.x.x"
   },
   "scripts": {
+    "dev": "node_modules/webpack/bin/webpack.js",
     "build": "node_modules/webpack/bin/webpack.js -p",
     "lint": "eslint --config=.eslintrc.js .",
     "lint-errors": "eslint --config=.eslintrc.js . --quiet",

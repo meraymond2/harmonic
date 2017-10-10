@@ -27,7 +27,16 @@ module.exports = {
                     ]
                 }),
                 exclude: [/node_modules/]
-            }
+            }            ,
+            { // without css modules
+                test: /\.[s]?css$/,
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "css-loader" },
+                    { loader: "sass-loader"}
+                ],
+                include: [/node_modules/]
+            },
         ]
     },
     plugins: [

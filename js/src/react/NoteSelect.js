@@ -1,14 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
-const NoteSelect = ({ noteSpns }) =>
+import { selectedNotesUpdate } from "../redux/actions";
+
+const NoteSelect = ({ noteSpns, selected, handleSelect }) =>
     <div>
-        {noteSpns.map(spn => <span>{spn}</span>)}
+        <Select
+            onChange={handleSelect}
+            options={noteSpns.map(note => ({ value: note, label: note }))}
+            multi
+            value={selected}
+        />
     </div>
 ;
 
-const mapStateToProps = ({ noteSpns }) => ({
-    noteSpns
+const mapStateToProps = ({ noteSpns, selectedNotes }) => ({
+    noteSpns,
+    selected: selectedNotes
 });
 
-export default connect(mapStateToProps)(NoteSelect);
+const mapDispatchToProps = (dispatch) => ({
+    handleSelect: (options) => dispatch(selectedNotesUpdate(options.map(opt => opt.value)))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteSelect);

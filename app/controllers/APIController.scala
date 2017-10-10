@@ -25,8 +25,8 @@ class APIController extends Controller {
   }
 
   def findChord = Action.async { implicit req =>
-    req.body.asJson.fold(Future(BadRequest(Json.obj())))(json =>
-      json.asOpt[Seq[Note]].fold(Future(BadRequest(Json.obj())))(notes =>
+    req.body.asJson.fold(Future(BadRequest(Json.obj("msg" -> "Not JSON"))))(json =>
+      json.asOpt[Seq[Note]].fold(Future(BadRequest(Json.obj("msg" -> "JSON Invalid"))))(notes =>
         ChordFinder.findChord(notes:_*).flatMap(_.fold(Future(BadRequest(Json.obj("msg" -> "No Chord"))))(chord => {
           KeyDb.findKeys(chord).map(keys =>
             Ok(Json.obj(

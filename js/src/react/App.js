@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import NoteSelect from "./NoteSelect";
+import Submit from "./Submit";
 import { fetchNotes } from "../redux/actions";
 
 class App extends React.Component {
@@ -10,7 +12,12 @@ class App extends React.Component {
     }
 
     render() {
-        return <NoteSelect />
+        return (
+            <div>
+                <NoteSelect />
+                <Submit />
+            </div>
+        );
     }
 
 }
