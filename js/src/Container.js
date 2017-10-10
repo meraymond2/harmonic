@@ -31,27 +31,27 @@ class App extends React.Component {
             }))
     }
 
-    handleChange(event) {
-        const select = event.target;
-        const values = [...select.options].filter(opt => opt.selected).map(opt => opt.value);
-        this.setState({ selected: { ...this.state.selected, [select.id]: values }});
-    }
+    // handleChange(event) {
+    //     const select = event.target;
+    //     const values = [...select.options].filter(opt => opt.selected).map(opt => opt.value);
+    //     this.setState({ selected: { ...this.state.selected, [select.id]: values }});
+    // }
 
-    submit() {
-        this.setState({ error: "" });
-        const selectedNotes = Object.keys(this.state.selected).reduce((acc, octave) => acc.concat(this.state.selected[octave]), []);
-        const fullNotes = selectedNotes.map(spn => this.state.notesBySpn[spn]);
-        fetch("/api/chord", {
-            body: JSON.stringify(fullNotes),
-            headers: {
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-        }).then(checkStatusAndGetJSON).then(json => this.setState({
-            chord: json.chord,
-            keys: json.keys
-        })).catch(error => this.setState({ error: error.msg }));
-    }
+    // submit() {
+    //     this.setState({ error: "" });
+    //     const selectedNotes = Object.keys(this.state.selected).reduce((acc, octave) => acc.concat(this.state.selected[octave]), []);
+    //     const fullNotes = selectedNotes.map(spn => this.state.notesBySpn[spn]);
+    //     fetch("/api/chord", {
+    //         body: JSON.stringify(fullNotes),
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         method: "POST",
+    //     }).then(checkStatusAndGetJSON).then(json => this.setState({
+    //         chord: json.chord,
+    //         keys: json.keys
+    //     })).catch(error => this.setState({ error: error.msg }));
+    // }
 
     render() {
         return (
