@@ -103,8 +103,13 @@ object ChordFinder {
     * @return whether the intervals can be the first inversion of a minor triad.
     */
   private def isMinSixChord(toCheck: Set[HarmonicInterval]): Boolean = {
-    val minSixChord: Set[HarmonicInterval] = Set(maj3rd, maj6th)
-    minSixChord == toCheck
+    val minSixChord: Set[HarmonicInterval] = Set(maj3rd, maj6th, octave)
+    val missingIntervals = minSixChord.diff(toCheck)
+    val hasNecessaryIntervals =
+      missingIntervals.isEmpty ||
+      (missingIntervals == Set(octave))
+    val doesNotContainOtherIntervals = toCheck.diff(minSixChord).isEmpty
+    hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
   /***
@@ -160,8 +165,13 @@ object ChordFinder {
     * @return whether the intervals can be the first inversion of a major triad.
     */
   private def isMajSixChord(toCheck: Set[HarmonicInterval]): Boolean = {
-    val majSixChord: Set[HarmonicInterval] = Set(min3rd, min6th)
-    majSixChord == toCheck
+    val majSixChord: Set[HarmonicInterval] = Set(min3rd, min6th, octave)
+    val missingIntervals = majSixChord.diff(toCheck)
+    val hasNecessaryIntervals =
+      missingIntervals.isEmpty ||
+      (missingIntervals == Set(octave))
+    val doesNotContainOtherIntervals = toCheck.diff(majSixChord).isEmpty
+    hasNecessaryIntervals && doesNotContainOtherIntervals
   }
 
   /***
